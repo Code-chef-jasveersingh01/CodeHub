@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>This code helps you to initialize the dynamically appended elements</h2>
+</body>
+<script>
+    //-----------------------------------Detection code starts here------------------
+    //This code executes when new select tag is inserted and it initialize the select2 dynamically by detecting changes is inserted in dom
+    const observer = new MutationObserver(function(mutations_list) {
+        mutations_list.forEach(function(mutation) {
+                mutation.addedNodes.forEach(function(added_node) {
+                    $('.selectpicker').select2();
+                    if(added_node.id == 'categories') {
+                        observer.disconnect();
+                    }
+                });
+            });
+        });
+        observer.observe(document.querySelector(".couponRuleData"), { subtree: false, childList: true });
+
+    //---------------------Detection code ended----------------------------------------
+</script>
+</html>
