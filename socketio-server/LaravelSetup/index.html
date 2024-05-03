@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket setup</title>
+</head>
+<body>
+
+<button id="sendDataButton">Send Data</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+<script>
+  
+
+    const socket = io('http://localhost:3000'); // Change the URL to match your Socket.IO server URL
+
+    document.getElementById('sendDataButton').addEventListener('click', () => {
+        const dataToSend = {
+            message: 'Hello from index file!',
+            timestamp: new Date().toISOString()
+        };
+
+        // Emitting data to the server
+        socket.emit('dataFromClient', dataToSend);
+    });
+</script>
+</body>
+</html>
