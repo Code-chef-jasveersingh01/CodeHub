@@ -1,0 +1,32 @@
+ @forelse ($ticket->comments as $comment)
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="bg-secondary rounded p-2 m-2 col-sm-5 @if($comment->comment_user_type == 1) col-sm-offset-7 @else float-right @endif">
+                                            <p class="font-weight-bold"><a href="mailto:{{ $comment->author_email }}">{{ $comment->author_name }}</a> ({{ $comment->created_at }})</p>
+                                            <p>{{ $comment->comment_text }}</p>
+                                            @if ($comment->attachments->isNotEmpty())
+                                                <div class="row">
+                                                    @foreach ($comment->attachments as $attachment)
+                                                            <div class="col-md-2">
+                                                                <a target="_blank" href="{{ $attachment->original_url }}">
+                                                                    @if(explode('/', $attachment->mime_type)[1] !== 'pdf')
+                                                                    <img class="img-thumbnail"   src="{{ $attachment->original_url }}" alt="{{ $attachment->file_name }}">
+                                                                    @else
+                                                                    <img class="img-thumbnail"  src="{{ URL::asset('assets/images/pdf-icon.png') }}" alt="{{ $attachment->file_name }}">
+                                                                    @endif
+                                                                </a>
+                                                            </div>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="row">
+                                    <div class="col">
+                                        <p>There are no comments.</p>
+                                    </div>
+                                </div>
+                                <hr />
+                            @endforelse
