@@ -1,0 +1,66 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+ $(document).ready(function() {
+        let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        // Get the numeric timezone offset in minutes
+        let offsetMinutes = new Date().getTimezoneOffset();
+
+        //Remove the negative sign if present and vice-versa
+        offsetMinutes = offsetMinutes < 0 ? -offsetMinutes : -Math.abs(offsetMinutes);
+
+        //Set up value in header field
+        $('meta[name="timezone"]').attr('content', userTimezone);
+        $('meta[name="offsetMinutes"]').attr('content', offsetMinutes);
+
+        $.ajaxSetup({
+            headers: {
+                    'offsetMinutes': offsetMinutes,
+                    'userTimezone': userTimezone
+                }
+        });
+    });
+        @if(Route::currentRouteName() == 'tickets.show')
+            function adjustDateWithOffset(dateString, offsetMinutes) {
+                // Parse the date string in the format "YYYY-MM-DD HH:MM:SS"
+                const date = new Date(dateString);
+
+                // Add the offset in minutes
+                date.setMinutes(date.getMinutes() + offsetMinutes);
+
+                // Extract the updated date and time components
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                const day = String(date.getDate()).padStart(2, '0');
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                const seconds = String(date.getSeconds()).padStart(2, '0');
+
+                // Format the date to "Y-m-d H:i:s"
+                return ` (${year}-${month}-${day} ${hours}:${minutes}:${seconds})`;
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get the numeric timezone offset in minutes
+                let offsetMinutes = new Date().getTimezoneOffset();
+
+                //Remove the negative sign if present and vice-versa
+                offsetMinutes = offsetMinutes < 0 ? -offsetMinutes : -Math.abs(offsetMinutes);
+
+                // Get all elements with the class 'comment-date'
+                const dateElements = document.querySelectorAll('.comment-date');
+                dateElements.forEach(function (element) {
+                    // Get the date string from the data-date attribute
+                    const dateString = element.getAttribute('data-date');
+
+                    // Update the element's text content
+                    element.textContent = adjustDateWithOffset(dateString, offsetMinutes);
+                });
+            });
+        @endif
+</script>
+
+//The below code belongs to laravel 10 for conversion of utc time according to local (local timezone is picked using js from browser)
+ #date and time format changed
+        $comment->date = $comment->created_at->addMinutes($offsetMinutes)->format('Y-m-d');
