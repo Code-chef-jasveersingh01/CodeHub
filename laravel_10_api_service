@@ -1,0 +1,129 @@
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Client\ConnectionException;
+use GuzzleHttp\Client;
+
+class OddoApiService
+{
+    public function getAllDepartment()
+    {
+        try {
+            #api url
+            $url = get_company_setting('oddo_department_api_url').'/get_all_department';
+
+            #send request
+            return $this->getRequest($url, null);
+        } catch (\Exception $e) {
+            Log::error('#### ' . get_db_name() . ' #### OddoApiService -> getTicketCategory() #### request data : #### ' . $e->getMessage());
+            return ['message' => __('message.something_went_wrong'), 'status' => Response::HTTP_INTERNAL_SERVER_ERROR];
+        }
+    }
+
+    public function getRequest($requestURL, $requestData)
+    {
+        try {
+            #send request
+            $response = Http::withOptions(['verify' => false])
+                ->withHeaders([
+                    'Content-Type' => 'application/json'
+                    ])
+                ->withBody('{}', 'application/json')
+                ->get($requestURL, $requestData);
+
+                if($response->successful()){
+                    return [
+                        'error'   => false,
+                        'message' => __('message.API execute successfully'),
+                        'status'  => $response->status(),
+                        'data'    => $response,
+                    ];
+                } elseif ($response->clientError()) {
+                    return [
+                        'error'   => true,
+                        'message' => $response->reason(),
+                        'status'  => $response->status(),
+                    ];
+                } elseif ($response->serverError()) {
+                    return [
+                        'error'   => true,
+                        'message' => $response->reason(),
+                        'status'  => $response->status(),
+                    ];
+                } elseif ($response->failed()) {
+                    return [
+                        'error'   => true,
+                        'message' => __('message.unknown_error_occurred'),
+                        'status'  => $response->status(),
+                    ];
+                }
+        } catch (ConnectionException $e) {
+            Log::error('#### ' . get_db_name() . ' #### OddoApiService-> getRequest() #### request data : ' . $requestData . ' #### Unable to connect api server #### ' . $e->getMessage());
+            return [
+                'message' => __('message.unable_to_connect_api_server'),
+                'status'  => Response::HTTP_BAD_GATEWAY,
+            ];
+        } catch (\Exception $e) {
+            Log::error('#### ' . get_db_name() . ' #### OddoApiService-> getRequest() #### request data : ' . $requestData . ' #### ' . $e->getMessage());
+            return [
+                'message' => __('message.something_went_wrong'),
+                'status'  => Response::HTTP_INTERNAL_SERVER_ERROR,
+            ];
+        }
+    }
+
+    public function postRequest($requestURL, $requestData)
+    {
+        try {
+            #send request
+            $response = Http::withOptions(['verify' => false])->withHeaders([
+                'Content-Type' => 'application/json'
+            ])->post($requestURL, $requestData);
+
+            if($response->successful()){
+                return [
+                    'error'   => false,
+                    'message' => __('message.API execute successfully'),
+                    'status'  => $response->status(),
+                    'data'    => $response,
+                ];
+            } elseif ($response->clientError()) {
+                return [
+                    'error'   => true,
+                    'message' => $response->reason(),
+                    'status'  => $response->status(),
+                ];
+            } elseif ($response->serverError()) {
+                return [
+                    'error'   => true,
+                    'message' => $response->reason(),
+                    'status'  => $response->status(),
+                ];
+            } elseif ($response->failed()) {
+                return [
+                    'error'   => true,
+                    'message' => __('message.unknown_error_occurred'),
+                    'status'  => $response->status(),
+                ];
+            }
+        } catch (ConnectionException $e) {
+            Log::error('#### ' . get_db_name() . ' #### OddoApiService-> postRequest() #### request data : ' . $requestData . ' #### Unable to connect ticketing system api server #### ' . $e->getMessage());
+            return [
+                'message' => __('message.Unable to connect with ticketing system server'),
+                'status'  => Response::HTTP_BAD_GATEWAY,
+            ];
+        } catch (\Exception $e) {
+            Log::error('#### ' . get_db_name() . ' #### OddoApiService-> postRequest() #### request data : ' . $requestData . ' #### ' . $e->getMessage());
+            return [
+                'message' => __('message.something_went_wrong'),
+                'status'  => Response::HTTP_INTERNAL_SERVER_ERROR,
+            ];
+        }
+    }
+}
