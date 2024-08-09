@@ -14,6 +14,14 @@ class OddoApiService
 {
     public function getAllDepartment()
     {
+
+        protected $baseUrl;
+
+        public function __construct()
+        {
+            $this->baseUrl      = config('services.oddo_setting.url');
+        }
+
         try {
             #api url
             $url = get_company_setting('oddo_department_api_url').'/get_all_department';
