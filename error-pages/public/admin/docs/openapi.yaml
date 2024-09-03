@@ -1,0 +1,2153 @@
+openapi: 3.0.3
+info:
+  title: 'Time360 Pro Admin API'
+  description: 'Time360 Pro Admin API'
+  version: 2.0.0
+servers:
+  -
+    url: 'https://hrmpro.tatime365.com'
+paths:
+  /api/v1/admin/login:
+    post:
+      summary: Login
+      operationId: login
+      description: ''
+      parameters:
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'user login successfully'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'user login successfully'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Account expired'
+                properties:
+                  message:
+                    type: string
+                    example: 'Account expired'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'username or password not match'
+                properties:
+                  message:
+                    type: string
+                    example: 'username or password not match'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: ''
+                  example: error
+                password:
+                  type: string
+                  description: ''
+                  example: 'qfA#d5c'
+              required:
+                - username
+                - password
+      security: []
+  /api/v1/admin/logout:
+    post:
+      summary: Logout
+      operationId: logout
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Logged out'
+                properties:
+                  message:
+                    type: string
+                    example: 'Logged out'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Auth
+  /api/v1/admin/becon-auth/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: is_active
+          description: '(0 or 1).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(0 or 1).'
+            example: 1
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Becon List'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Becon List'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Becon Auth'
+  /api/v1/admin/department/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: is_active
+          description: '(0 or 1).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(0 or 1).'
+            example: 1
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Department List'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Department List'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Department
+  /api/v1/admin/department/create:
+    post:
+      summary: Create
+      operationId: create
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Records created successfully.'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Records created successfully.'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Department
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                department_name:
+                  type: object
+                  description: ''
+                  example:
+                    en:
+                      - optio
+                  properties:
+                    en:
+                      type: array
+                      description: 'english name.'
+                      example:
+                        - optio
+                      items:
+                        type: string
+                    ar:
+                      type: array
+                      description: 'arabic name.'
+                      example:
+                        - et
+                      items:
+                        type: string
+                    de:
+                      type: array
+                      description: 'german name.'
+                      example:
+                        - sint
+                      items:
+                        type: string
+                parent_department_id:
+                  type: integer
+                  description: 'department id.'
+                  example: 20
+                is_active:
+                  type: integer
+                  description: '(0 or 1).'
+                  example: 1
+                shifts:
+                  type: array
+                  description: 'shift ids array.'
+                  example: 1
+                  items:
+                    type: string
+                zones:
+                  type: array
+                  description: 'zone ids array.'
+                  example: 1
+                  items:
+                    type: string
+                wifi_auths:
+                  type: array
+                  description: 'wifi_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                qr_auths:
+                  type: array
+                  description: 'qr_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                becons:
+                  type: array
+                  description: 'becon ids array.'
+                  example: 1
+                  items:
+                    type: string
+                nfc_auths:
+                  type: array
+                  description: 'nfc_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+              required:
+                - is_active
+  '/api/v1/admin/department/edit/{id}':
+    post:
+      summary: Edit
+      operationId: edit
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        202:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Records updated successfully.'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Records updated successfully.'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Record not found.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Department
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                department_name:
+                  type: object
+                  description: ''
+                  example:
+                    en:
+                      - veritatis
+                  properties:
+                    en:
+                      type: array
+                      description: 'english name.'
+                      example:
+                        - veritatis
+                      items:
+                        type: string
+                    ar:
+                      type: array
+                      description: 'arabic name.'
+                      example:
+                        - ipsa
+                      items:
+                        type: string
+                    de:
+                      type: array
+                      description: 'german name.'
+                      example:
+                        - veniam
+                      items:
+                        type: string
+                parent_department_id:
+                  type: integer
+                  description: 'department id.'
+                  example: 20
+                is_active:
+                  type: integer
+                  description: '(0 or 1).'
+                  example: 1
+                shifts:
+                  type: array
+                  description: 'shift ids array.'
+                  example: 1
+                  items:
+                    type: string
+                zones:
+                  type: array
+                  description: 'zone ids array.'
+                  example: 1
+                  items:
+                    type: string
+                wifi_auths:
+                  type: array
+                  description: 'wifi_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                qr_auths:
+                  type: array
+                  description: 'qr_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                becons:
+                  type: array
+                  description: 'becon ids array.'
+                  example: 1
+                  items:
+                    type: string
+                nfc_auths:
+                  type: array
+                  description: 'nfc_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+              required:
+                - is_active
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'department ID.'
+        example: 15
+        required: true
+        schema:
+          type: integer
+  '/api/v1/admin/department/delete/{id}':
+    post:
+      summary: Delete
+      operationId: delete
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Record Deleted.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Record Deleted.'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Record not found.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Department
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'department id.'
+        example: 3
+        required: true
+        schema:
+          type: integer
+  /api/v1/admin/lockups/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: list_key
+          description: '(gender, nationalities, contractTypes, locations, jobTitles, resignationReason).'
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: '(gender, nationalities, contractTypes, locations, jobTitles, resignationReason).'
+            example: 'HR department'
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: List
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: List
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Lists (Lockups)'
+  /api/v1/admin/nfc-auth/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: is_active
+          description: '(0 or 1).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(0 or 1).'
+            example: 1
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'NFC list'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'NFC list'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'NFC Auth'
+  /api/v1/admin/qr-auth/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: is_active
+          description: '(0 or 1).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(0 or 1).'
+            example: 1
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'QR List'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'QR List'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'QR Auth'
+  /api/v1/admin/shift/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: is_active
+          description: '(0 or 1).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(0 or 1).'
+            example: 1
+        -
+          in: query
+          name: priority
+          description: '(1->low or 2->high).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(1->low or 2->high).'
+            example: 1
+        -
+          in: query
+          name: shift_type
+          description: '(1->fixed_shift, 2->split_shift, 3->overnight, 4->open shift, 5->business shift, 6->multi entry shift).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(1->fixed_shift, 2->split_shift, 3->overnight, 4->open shift, 5->business shift, 6->multi entry shift).'
+            example: 1
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Shift List'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Shift List'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Shift
+  /api/v1/admin/user/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: is_active
+          description: '(0 or 1).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(0 or 1).'
+            example: 1
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Users List'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Users List'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - User
+  /api/v1/admin/user/create:
+    post:
+      summary: Create
+      operationId: create
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Records created successfully.'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Records created successfully.'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Create User limit completed.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Create User limit completed.'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custom_id:
+                  type: integer
+                  description: .
+                  example: 20
+                civil_id:
+                  type: string
+                  description: .
+                  example: SC20
+                username:
+                  type: string
+                  description: .
+                  example: test
+                full_name:
+                  type: string
+                  description: .
+                  example: 'test user'
+                email:
+                  type: string
+                  description: .
+                  example: 'test user'
+                password:
+                  type: string
+                  description: .
+                  example: '!@Admin123'
+                gender_type:
+                  type: integer
+                  description: '(from lockup list).'
+                  example: 0
+                nationality_type:
+                  type: integer
+                  description: '(from lockup list).'
+                  example: 0
+                location_type:
+                  type: integer
+                  description: '(from lockup list).'
+                  example: 0
+                contract_type:
+                  type: integer
+                  description: '(from lockup list).'
+                  example: 0
+                job_title_type:
+                  type: integer
+                  description: "(from lockup list). Example: aust     *\n//  * @bodyParam role_id int required (from role list)."
+                  example: 1
+                department_id:
+                  type: integer
+                  description: '(from department list).'
+                  example: 1
+                manager_id:
+                  type: integer
+                  description: '(from manager list).'
+                  example: 1
+                expiration_date:
+                  type: date
+                  description: .
+                  example: '2023-12-14'
+                is_active:
+                  type: integer
+                  description: '(0 or 1).'
+                  example: 1
+                lang:
+                  type: string
+                  description: '(en,ar,de).'
+                  example: '1     *'
+                shifts:
+                  type: array
+                  description: 'shift ids array.'
+                  example: 1
+                  items:
+                    type: string
+                zones:
+                  type: array
+                  description: 'zone ids array.'
+                  example: 1
+                  items:
+                    type: string
+                wifi_auths:
+                  type: array
+                  description: 'wifi_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                qr_auths:
+                  type: array
+                  description: 'qr_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                becons:
+                  type: array
+                  description: 'becon ids array.'
+                  example: 1
+                  items:
+                    type: string
+                nfc_auths:
+                  type: array
+                  description: 'nfc_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                image:
+                  type: base64
+                  description: ''
+                  example: non
+              required:
+                - custom_id
+                - civil_id
+                - username
+                - full_name
+                - email
+                - password
+                - gender_type
+                - nationality_type
+                - department_id
+                - expiration_date
+                - is_active
+                - lang
+  '/api/v1/admin/user/edit/{id}':
+    post:
+      summary: Edit
+      operationId: edit
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Records updated successfully.'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Records updated successfully.'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Record not found.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custom_id:
+                  type: integer
+                  description: .
+                  example: 20
+                civil_id:
+                  type: string
+                  description: .
+                  example: SC20
+                username:
+                  type: string
+                  description: .
+                  example: test
+                full_name:
+                  type: string
+                  description: .
+                  example: 'test user'
+                email:
+                  type: string
+                  description: .
+                  example: 'test user'
+                password:
+                  type: string
+                  description: .
+                  example: '!@Admin123'
+                gender_type:
+                  type: integer
+                  description: '(from lockup list).'
+                  example: 0
+                nationality_type:
+                  type: integer
+                  description: '(from lockup list).'
+                  example: 0
+                location_type:
+                  type: integer
+                  description: '(from lockup list).'
+                  example: 0
+                contract_type:
+                  type: integer
+                  description: '(from lockup list).'
+                  example: 0
+                job_title_type:
+                  type: integer
+                  description: "(from lockup list). Example: aust     *\n//  * @bodyParam role_id int required (from role list)."
+                  example: 1
+                department_id:
+                  type: integer
+                  description: '(from department list).'
+                  example: 1
+                manager_id:
+                  type: integer
+                  description: '(from manager list).'
+                  example: 1
+                expiration_date:
+                  type: date
+                  description: .
+                  example: '2023-12-14'
+                is_active:
+                  type: integer
+                  description: '(0 or 1).'
+                  example: 1
+                lang:
+                  type: string
+                  description: '(en,ar,de).'
+                  example: '1     *'
+                shifts:
+                  type: array
+                  description: 'shift ids array.'
+                  example: 1
+                  items:
+                    type: string
+                zones:
+                  type: array
+                  description: 'zone ids array.'
+                  example: 1
+                  items:
+                    type: string
+                wifi_auths:
+                  type: array
+                  description: 'wifi_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                qr_auths:
+                  type: array
+                  description: 'qr_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                becons:
+                  type: array
+                  description: 'becon ids array.'
+                  example: 1
+                  items:
+                    type: string
+                nfc_auths:
+                  type: array
+                  description: 'nfc_auth ids array.'
+                  example: 1
+                  items:
+                    type: string
+                image:
+                  type: base64
+                  description: ''
+                  example: dolore
+              required:
+                - custom_id
+                - civil_id
+                - username
+                - full_name
+                - email
+                - password
+                - gender_type
+                - nationality_type
+                - department_id
+                - expiration_date
+                - is_active
+                - lang
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'user id.'
+        example: 13
+        required: true
+        schema:
+          type: integer
+  '/api/v1/admin/user/delete/{id}':
+    post:
+      summary: Delete
+      operationId: delete
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Record Deleted.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Record Deleted.'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Record not found.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - User
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'user id.'
+        example: 15
+        required: true
+        schema:
+          type: integer
+  /api/v1/admin/wifi-auth/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: is_active
+          description: '(0 or 1).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(0 or 1).'
+            example: 1
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'WiFi List'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'WiFi List'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - WiFi
+  /api/v1/admin/zone/list:
+    get:
+      summary: List
+      operationId: list
+      description: ''
+      parameters:
+        -
+          in: query
+          name: paginate
+          description: '(true or false).'
+          example: 'true'
+          required: false
+          schema:
+            type: string
+            description: '(true or false).'
+            example: 'true'
+        -
+          in: query
+          name: result_per_page
+          description: int.
+          example: '12'
+          required: false
+          schema:
+            type: string
+            description: int.
+            example: '12'
+        -
+          in: query
+          name: search_key
+          description: string.
+          example: 'HR department'
+          required: false
+          schema:
+            type: string
+            description: string.
+            example: 'HR department'
+        -
+          in: query
+          name: is_active
+          description: '(0 or 1).'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: '(0 or 1).'
+            example: 1
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer .token'
+          schema:
+            type: string
+        -
+          in: header
+          name: code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Zone List'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'Zone List'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Zone
+tags:
+  -
+    name: Auth
+    description: "\nAPIs for User login"
+  -
+    name: 'Becon Auth'
+    description: "\nAPIs for Becon Auth"
+  -
+    name: Department
+    description: "\nAPIs for Department"
+  -
+    name: 'Lists (Lockups)'
+    description: "\nAPIs for Lists (Lockups)"
+  -
+    name: 'NFC Auth'
+    description: "\nAPIs for NFC Auth"
+  -
+    name: 'QR Auth'
+    description: "\nAPIs for QR Auth"
+  -
+    name: Shift
+    description: "\nAPIs for Shift"
+  -
+    name: User
+    description: "\nAPIs for User"
+  -
+    name: WiFi
+    description: "\nAPIs for WiFi"
+  -
+    name: Zone
+    description: "\nAPIs for Zone"
+components:
+  securitySchemes:
+    default:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: ''
+security:
+  -
+    default: []
