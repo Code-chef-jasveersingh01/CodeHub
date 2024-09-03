@@ -1,0 +1,1 @@
+// document.writeln("<script disable-devtool-auto src='" + window.location.origin + "/assets/js/disabletool.js' md5='xxx' url='xxx' tk-name='xxx' interval='xxx' disable-menu='xxx' detectors='xxx' clear-log='true' disable-select='false' disable-copy='false' disable-cut='true' disable-paste='false'></script > ");

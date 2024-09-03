@@ -1,0 +1,4534 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Time360 Pro Admin API</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="./css/theme-default.print.css" media="print">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+                    body .content .bash-example code { display: none; }
+                    body .content .javascript-example code { display: none; }
+            </style>
+
+
+    <script src="./js/theme-default-4.22.0.js"></script>
+
+</head>
+
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img src="./images/navbar.png" alt="navbar-image"/>
+    </span>
+</a>
+<div class="tocify-wrapper">
+    
+            <div class="lang-selector">
+                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                    </div>
+    
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+
+    <div id="toc">
+                    <ul id="tocify-header-introduction" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="introduction">
+                    <a href="#introduction">Introduction</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-authenticating-requests" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="authenticating-requests">
+                    <a href="#authenticating-requests">Authenticating requests</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-auth" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="auth">
+                    <a href="#auth">Auth</a>
+                </li>
+                                    <ul id="tocify-subheader-auth" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="auth-POSTapi-v1-admin-login">
+                                <a href="#auth-POSTapi-v1-admin-login">Login</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="auth-POSTapi-v1-admin-logout">
+                                <a href="#auth-POSTapi-v1-admin-logout">Logout</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-becon-auth" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="becon-auth">
+                    <a href="#becon-auth">Becon Auth</a>
+                </li>
+                                    <ul id="tocify-subheader-becon-auth" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="becon-auth-GETapi-v1-admin-becon-auth-list">
+                                <a href="#becon-auth-GETapi-v1-admin-becon-auth-list">List</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-department" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="department">
+                    <a href="#department">Department</a>
+                </li>
+                                    <ul id="tocify-subheader-department" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="department-GETapi-v1-admin-department-list">
+                                <a href="#department-GETapi-v1-admin-department-list">List</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="department-POSTapi-v1-admin-department-create">
+                                <a href="#department-POSTapi-v1-admin-department-create">Create</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="department-POSTapi-v1-admin-department-edit--id-">
+                                <a href="#department-POSTapi-v1-admin-department-edit--id-">Edit</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="department-POSTapi-v1-admin-department-delete--id-">
+                                <a href="#department-POSTapi-v1-admin-department-delete--id-">Delete</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-lists-lockups" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="lists-lockups">
+                    <a href="#lists-lockups">Lists (Lockups)</a>
+                </li>
+                                    <ul id="tocify-subheader-lists-lockups" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="lists-lockups-GETapi-v1-admin-lockups-list">
+                                <a href="#lists-lockups-GETapi-v1-admin-lockups-list">List</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-nfc-auth" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="nfc-auth">
+                    <a href="#nfc-auth">NFC Auth</a>
+                </li>
+                                    <ul id="tocify-subheader-nfc-auth" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="nfc-auth-GETapi-v1-admin-nfc-auth-list">
+                                <a href="#nfc-auth-GETapi-v1-admin-nfc-auth-list">List</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-qr-auth" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="qr-auth">
+                    <a href="#qr-auth">QR Auth</a>
+                </li>
+                                    <ul id="tocify-subheader-qr-auth" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="qr-auth-GETapi-v1-admin-qr-auth-list">
+                                <a href="#qr-auth-GETapi-v1-admin-qr-auth-list">List</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-shift" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="shift">
+                    <a href="#shift">Shift</a>
+                </li>
+                                    <ul id="tocify-subheader-shift" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="shift-GETapi-v1-admin-shift-list">
+                                <a href="#shift-GETapi-v1-admin-shift-list">List</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-user" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="user">
+                    <a href="#user">User</a>
+                </li>
+                                    <ul id="tocify-subheader-user" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="user-GETapi-v1-admin-user-list">
+                                <a href="#user-GETapi-v1-admin-user-list">List</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="user-POSTapi-v1-admin-user-create">
+                                <a href="#user-POSTapi-v1-admin-user-create">Create</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="user-POSTapi-v1-admin-user-edit--id-">
+                                <a href="#user-POSTapi-v1-admin-user-edit--id-">Edit</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="user-POSTapi-v1-admin-user-delete--id-">
+                                <a href="#user-POSTapi-v1-admin-user-delete--id-">Delete</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-wifi" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="wifi">
+                    <a href="#wifi">WiFi</a>
+                </li>
+                                    <ul id="tocify-subheader-wifi" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="wifi-GETapi-v1-admin-wifi-auth-list">
+                                <a href="#wifi-GETapi-v1-admin-wifi-auth-list">List</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-zone" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="zone">
+                    <a href="#zone">Zone</a>
+                </li>
+                                    <ul id="tocify-subheader-zone" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="zone-GETapi-v1-admin-zone-list">
+                                <a href="#zone-GETapi-v1-admin-zone-list">List</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+            </div>
+
+    <ul class="toc-footer" id="toc-footer">
+                            <li style="padding-bottom: 5px;"><a href="./openapi.yaml">View OpenAPI spec</a></li>
+                <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+    </ul>
+
+    <ul class="toc-footer" id="last-updated">
+        <li>Last updated: December 27, 2023</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introduction">Introduction</h1>
+<p>Time360 Pro Admin API</p>
+<aside>
+    <strong>Base URL</strong>: <code>https://hrmpro.tatime365.com/</code>
+</aside>
+<p>This documentation aims to provide all the information you need to work with our API.</p>
+<aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
+You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
+
+        <h1 id="authenticating-requests">Authenticating requests</h1>
+<p>To authenticate requests, include a <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer .token"</code></strong>.</p>
+<p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
+<aside>You can retrieve your token by <b> login to the system</b>.</aside>
+
+        <h1 id="auth">Auth</h1>
+
+    <p>APIs for User login</p>
+
+                                <h2 id="auth-POSTapi-v1-admin-login">Login</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-admin-login">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://hrmpro.tatime365.com/api/v1/admin/login" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)" \
+    --header "lang: (en, ar, de)" \
+    --data "{
+    \"username\": \"error\",
+    \"password\": \"qfA#d5c\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/login"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+    "lang": "(en, ar, de)",
+};
+
+let body = {
+    "username": "error",
+    "password": "qfA#d5c"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-admin-login">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;user login successfully&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Account expired&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;username or password not match&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-admin-login" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-admin-login"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-admin-login"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-admin-login" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-admin-login">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-admin-login" data-method="POST"
+      data-path="api/v1/admin/login"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-admin-login', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/admin/login</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-admin-login"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-admin-login"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-v1-admin-login"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>lang</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="lang"                data-endpoint="POSTapi-v1-admin-login"
+               value="(en, ar, de)"
+               data-component="header">
+    <br>
+<p>Example: <code>(en, ar, de)</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="username"                data-endpoint="POSTapi-v1-admin-login"
+               value="error"
+               data-component="body">
+    <br>
+<p>Example: <code>error</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="POSTapi-v1-admin-login"
+               value="qfA#d5c"
+               data-component="body">
+    <br>
+<p>Example: <code>qfA#d5c</code></p>
+        </div>
+        </form>
+
+                    <h2 id="auth-POSTapi-v1-admin-logout">Logout</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-admin-logout">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://hrmpro.tatime365.com/api/v1/admin/logout" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)" \
+    --header "lang: (en, ar, de)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/logout"
+);
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+    "lang": "(en, ar, de)",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-admin-logout">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Logged out&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-admin-logout" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-admin-logout"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-admin-logout"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-admin-logout" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-admin-logout">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-admin-logout" data-method="POST"
+      data-path="api/v1/admin/logout"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-admin-logout', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/admin/logout</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-v1-admin-logout"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-admin-logout"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-admin-logout"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-v1-admin-logout"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>lang</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="lang"                data-endpoint="POSTapi-v1-admin-logout"
+               value="(en, ar, de)"
+               data-component="header">
+    <br>
+<p>Example: <code>(en, ar, de)</code></p>
+            </div>
+                        </form>
+
+                <h1 id="becon-auth">Becon Auth</h1>
+
+    <p>APIs for Becon Auth</p>
+
+                                <h2 id="becon-auth-GETapi-v1-admin-becon-auth-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-becon-auth-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/becon-auth/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;is_active=1" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/becon-auth/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "is_active": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-becon-auth-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Becon List&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-becon-auth-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-becon-auth-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-becon-auth-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-becon-auth-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-becon-auth-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-becon-auth-list" data-method="GET"
+      data-path="api/v1/admin/becon-auth/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-becon-auth-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/becon-auth/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-becon-auth-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-becon-auth-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-becon-auth-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-becon-auth-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-becon-auth-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-becon-auth-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-becon-auth-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="GETapi-v1-admin-becon-auth-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+            </div>
+                </form>
+
+                <h1 id="department">Department</h1>
+
+    <p>APIs for Department</p>
+
+                                <h2 id="department-GETapi-v1-admin-department-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-department-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/department/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;is_active=1" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/department/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "is_active": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-department-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Department List&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-department-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-department-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-department-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-department-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-department-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-department-list" data-method="GET"
+      data-path="api/v1/admin/department/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-department-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/department/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-department-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-department-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-department-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-department-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-department-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-department-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-department-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="GETapi-v1-admin-department-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+            </div>
+                </form>
+
+                    <h2 id="department-POSTapi-v1-admin-department-create">Create</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-admin-department-create">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://hrmpro.tatime365.com/api/v1/admin/department/create" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)" \
+    --data "{
+    \"parent_department_id\": 20,
+    \"is_active\": 1,
+    \"shifts\": 1,
+    \"zones\": 1,
+    \"wifi_auths\": 1,
+    \"qr_auths\": 1,
+    \"becons\": 1,
+    \"nfc_auths\": 1
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/department/create"
+);
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+let body = {
+    "parent_department_id": 20,
+    "is_active": 1,
+    "shifts": 1,
+    "zones": 1,
+    "wifi_auths": 1,
+    "qr_auths": 1,
+    "becons": 1,
+    "nfc_auths": 1
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-admin-department-create">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Records created successfully.&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-admin-department-create" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-admin-department-create"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-admin-department-create"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-admin-department-create" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-admin-department-create">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-admin-department-create" data-method="POST"
+      data-path="api/v1/admin/department/create"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-admin-department-create', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/admin/department/create</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-v1-admin-department-create"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-admin-department-create"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-admin-department-create"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-v1-admin-department-create"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>department_name</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>en</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="department_name.0.en[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="department_name.0.en[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>english name.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>ar</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="department_name.0.ar[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="department_name.0.ar[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>arabic name.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>de</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="department_name.0.de[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="department_name.0.de[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>german name.</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>parent_department_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="parent_department_id"                data-endpoint="POSTapi-v1-admin-department-create"
+               value="20"
+               data-component="body">
+    <br>
+<p>department id. Example: <code>20</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="POSTapi-v1-admin-department-create"
+               value="1"
+               data-component="body">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>shifts</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="shifts[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="shifts[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>shift ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>zones</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="zones[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="zones[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>zone ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>wifi_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="wifi_auths[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="wifi_auths[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>wifi_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>qr_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="qr_auths[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="qr_auths[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>qr_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>becons</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="becons[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="becons[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>becon ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>nfc_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="nfc_auths[0]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="nfc_auths[1]"                data-endpoint="POSTapi-v1-admin-department-create"
+               data-component="body">
+    <br>
+<p>nfc_auth ids array. Example: <code>1</code></p>
+        </div>
+        </form>
+
+                    <h2 id="department-POSTapi-v1-admin-department-edit--id-">Edit</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-admin-department-edit--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://hrmpro.tatime365.com/api/v1/admin/department/edit/15" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)" \
+    --data "{
+    \"parent_department_id\": 20,
+    \"is_active\": 1,
+    \"shifts\": 1,
+    \"zones\": 1,
+    \"wifi_auths\": 1,
+    \"qr_auths\": 1,
+    \"becons\": 1,
+    \"nfc_auths\": 1
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/department/edit/15"
+);
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+let body = {
+    "parent_department_id": 20,
+    "is_active": 1,
+    "shifts": 1,
+    "zones": 1,
+    "wifi_auths": 1,
+    "qr_auths": 1,
+    "becons": 1,
+    "nfc_auths": 1
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-admin-department-edit--id-">
+            <blockquote>
+            <p>Example response (202):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Records updated successfully.&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Record not found.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-admin-department-edit--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-admin-department-edit--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-admin-department-edit--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-admin-department-edit--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-admin-department-edit--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-admin-department-edit--id-" data-method="POST"
+      data-path="api/v1/admin/department/edit/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-admin-department-edit--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/admin/department/edit/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               value="15"
+               data-component="url">
+    <br>
+<p>department ID. Example: <code>15</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>department_name</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>en</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="department_name.0.en[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="department_name.0.en[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>english name.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>ar</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="department_name.0.ar[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="department_name.0.ar[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>arabic name.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>de</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="department_name.0.de[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="department_name.0.de[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>german name.</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>parent_department_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="parent_department_id"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               value="20"
+               data-component="body">
+    <br>
+<p>department id. Example: <code>20</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               value="1"
+               data-component="body">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>shifts</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="shifts[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="shifts[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>shift ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>zones</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="zones[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="zones[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>zone ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>wifi_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="wifi_auths[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="wifi_auths[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>wifi_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>qr_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="qr_auths[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="qr_auths[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>qr_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>becons</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="becons[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="becons[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>becon ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>nfc_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="nfc_auths[0]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="nfc_auths[1]"                data-endpoint="POSTapi-v1-admin-department-edit--id-"
+               data-component="body">
+    <br>
+<p>nfc_auth ids array. Example: <code>1</code></p>
+        </div>
+        </form>
+
+                    <h2 id="department-POSTapi-v1-admin-department-delete--id-">Delete</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-admin-department-delete--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://hrmpro.tatime365.com/api/v1/admin/department/delete/3" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/department/delete/3"
+);
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-admin-department-delete--id-">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Record Deleted.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Record not found.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-admin-department-delete--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-admin-department-delete--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-admin-department-delete--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-admin-department-delete--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-admin-department-delete--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-admin-department-delete--id-" data-method="POST"
+      data-path="api/v1/admin/department/delete/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-admin-department-delete--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/admin/department/delete/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-v1-admin-department-delete--id-"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-admin-department-delete--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-admin-department-delete--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-v1-admin-department-delete--id-"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="POSTapi-v1-admin-department-delete--id-"
+               value="3"
+               data-component="url">
+    <br>
+<p>department id. Example: <code>3</code></p>
+            </div>
+                    </form>
+
+                <h1 id="lists-lockups">Lists (Lockups)</h1>
+
+    <p>APIs for Lists (Lockups)</p>
+
+                                <h2 id="lists-lockups-GETapi-v1-admin-lockups-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-lockups-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/lockups/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;list_key=HR+department" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/lockups/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "list_key": "HR department",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-lockups-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;List&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-lockups-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-lockups-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-lockups-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-lockups-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-lockups-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-lockups-list" data-method="GET"
+      data-path="api/v1/admin/lockups/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-lockups-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/lockups/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-lockups-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-lockups-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-lockups-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-lockups-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-lockups-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-lockups-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-lockups-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>list_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="list_key"                data-endpoint="GETapi-v1-admin-lockups-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>(gender, nationalities, contractTypes, locations, jobTitles, resignationReason). Example: <code>HR department</code></p>
+            </div>
+                </form>
+
+                <h1 id="nfc-auth">NFC Auth</h1>
+
+    <p>APIs for NFC Auth</p>
+
+                                <h2 id="nfc-auth-GETapi-v1-admin-nfc-auth-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-nfc-auth-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/nfc-auth/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;is_active=1" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/nfc-auth/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "is_active": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-nfc-auth-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;NFC list&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-nfc-auth-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-nfc-auth-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-nfc-auth-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-nfc-auth-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-nfc-auth-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-nfc-auth-list" data-method="GET"
+      data-path="api/v1/admin/nfc-auth/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-nfc-auth-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/nfc-auth/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-nfc-auth-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-nfc-auth-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-nfc-auth-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-nfc-auth-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-nfc-auth-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-nfc-auth-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-nfc-auth-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="GETapi-v1-admin-nfc-auth-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+            </div>
+                </form>
+
+                <h1 id="qr-auth">QR Auth</h1>
+
+    <p>APIs for QR Auth</p>
+
+                                <h2 id="qr-auth-GETapi-v1-admin-qr-auth-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-qr-auth-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/qr-auth/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;is_active=1" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/qr-auth/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "is_active": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-qr-auth-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;QR List&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-qr-auth-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-qr-auth-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-qr-auth-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-qr-auth-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-qr-auth-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-qr-auth-list" data-method="GET"
+      data-path="api/v1/admin/qr-auth/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-qr-auth-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/qr-auth/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-qr-auth-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-qr-auth-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-qr-auth-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-qr-auth-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-qr-auth-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-qr-auth-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-qr-auth-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="GETapi-v1-admin-qr-auth-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+            </div>
+                </form>
+
+                <h1 id="shift">Shift</h1>
+
+    <p>APIs for Shift</p>
+
+                                <h2 id="shift-GETapi-v1-admin-shift-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-shift-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/shift/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;is_active=1&amp;priority=1&amp;shift_type=1" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/shift/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "is_active": "1",
+    "priority": "1",
+    "shift_type": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-shift-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Shift List&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-shift-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-shift-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-shift-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-shift-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-shift-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-shift-list" data-method="GET"
+      data-path="api/v1/admin/shift/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-shift-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/shift/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-shift-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="priority"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(1-&gt;low or 2-&gt;high). Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>shift_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="shift_type"                data-endpoint="GETapi-v1-admin-shift-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(1-&gt;fixed_shift, 2-&gt;split_shift, 3-&gt;overnight, 4-&gt;open shift, 5-&gt;business shift, 6-&gt;multi entry shift). Example: <code>1</code></p>
+            </div>
+                </form>
+
+                <h1 id="user">User</h1>
+
+    <p>APIs for User</p>
+
+                                <h2 id="user-GETapi-v1-admin-user-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-user-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/user/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;is_active=1" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/user/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "is_active": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-user-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Users List&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-user-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-user-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-user-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-user-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-user-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-user-list" data-method="GET"
+      data-path="api/v1/admin/user/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-user-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/user/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-user-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-user-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-user-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-user-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-user-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-user-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-user-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="GETapi-v1-admin-user-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+            </div>
+                </form>
+
+                    <h2 id="user-POSTapi-v1-admin-user-create">Create</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-admin-user-create">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://hrmpro.tatime365.com/api/v1/admin/user/create" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)" \
+    --data "{
+    \"custom_id\": 20,
+    \"civil_id\": \"SC20\",
+    \"username\": \"test\",
+    \"full_name\": \"test user\",
+    \"email\": \"test user\",
+    \"password\": \"!@Admin123\",
+    \"gender_type\": 0,
+    \"nationality_type\": 0,
+    \"location_type\": 0,
+    \"contract_type\": 0,
+    \"job_title_type\": 1,
+    \"department_id\": 1,
+    \"manager_id\": 1,
+    \"expiration_date\": \"2023-12-14\",
+    \"is_active\": 1,
+    \"lang\": \"1     *\",
+    \"shifts\": 1,
+    \"zones\": 1,
+    \"wifi_auths\": 1,
+    \"qr_auths\": 1,
+    \"becons\": 1,
+    \"nfc_auths\": 1,
+    \"image\": \"non\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/user/create"
+);
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+let body = {
+    "custom_id": 20,
+    "civil_id": "SC20",
+    "username": "test",
+    "full_name": "test user",
+    "email": "test user",
+    "password": "!@Admin123",
+    "gender_type": 0,
+    "nationality_type": 0,
+    "location_type": 0,
+    "contract_type": 0,
+    "job_title_type": 1,
+    "department_id": 1,
+    "manager_id": 1,
+    "expiration_date": "2023-12-14",
+    "is_active": 1,
+    "lang": "1     *",
+    "shifts": 1,
+    "zones": 1,
+    "wifi_auths": 1,
+    "qr_auths": 1,
+    "becons": 1,
+    "nfc_auths": 1,
+    "image": "non"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-admin-user-create">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Records created successfully.&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Create User limit completed.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-admin-user-create" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-admin-user-create"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-admin-user-create"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-admin-user-create" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-admin-user-create">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-admin-user-create" data-method="POST"
+      data-path="api/v1/admin/user/create"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-admin-user-create', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/admin/user/create</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-v1-admin-user-create"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>custom_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="custom_id"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="20"
+               data-component="body">
+    <br>
+<p>. Example: <code>20</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>civil_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="civil_id"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="SC20"
+               data-component="body">
+    <br>
+<p>. Example: <code>SC20</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="username"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="test"
+               data-component="body">
+    <br>
+<p>. Example: <code>test</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>full_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="full_name"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="test user"
+               data-component="body">
+    <br>
+<p>. Example: <code>test user</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="test user"
+               data-component="body">
+    <br>
+<p>. Example: <code>test user</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="!@Admin123"
+               data-component="body">
+    <br>
+<p>. Example: <code>!@Admin123</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>gender_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="gender_type"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="0"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: <code>0</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>nationality_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="nationality_type"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="0"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: <code>0</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="location_type"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="0"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: <code>0</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>contract_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="contract_type"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="0"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: <code>0</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>job_title_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="job_title_type"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="1"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: aust     <em>
+//  </em> @bodyParam role_id int required (from role list). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>department_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="department_id"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="1"
+               data-component="body">
+    <br>
+<p>(from department list). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>manager_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="manager_id"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="1"
+               data-component="body">
+    <br>
+<p>(from manager list). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>expiration_date</code></b>&nbsp;&nbsp;
+<small>date</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="expiration_date"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="2023-12-14"
+               data-component="body">
+    <br>
+<p>. Example: <code>2023-12-14</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="1"
+               data-component="body">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>lang</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="lang"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="1     *"
+               data-component="body">
+    <br>
+<p>(en,ar,de). Example: <code>1     *</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>shifts</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="shifts[0]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="shifts[1]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+    <br>
+<p>shift ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>zones</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="zones[0]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="zones[1]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+    <br>
+<p>zone ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>wifi_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="wifi_auths[0]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="wifi_auths[1]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+    <br>
+<p>wifi_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>qr_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="qr_auths[0]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="qr_auths[1]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+    <br>
+<p>qr_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>becons</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="becons[0]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="becons[1]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+    <br>
+<p>becon ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>nfc_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="nfc_auths[0]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="nfc_auths[1]"                data-endpoint="POSTapi-v1-admin-user-create"
+               data-component="body">
+    <br>
+<p>nfc_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>image</code></b>&nbsp;&nbsp;
+<small>base64</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="image"                data-endpoint="POSTapi-v1-admin-user-create"
+               value="non"
+               data-component="body">
+    <br>
+<p>Example: <code>non</code></p>
+        </div>
+        </form>
+
+                    <h2 id="user-POSTapi-v1-admin-user-edit--id-">Edit</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-admin-user-edit--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://hrmpro.tatime365.com/api/v1/admin/user/edit/13" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)" \
+    --data "{
+    \"custom_id\": 20,
+    \"civil_id\": \"SC20\",
+    \"username\": \"test\",
+    \"full_name\": \"test user\",
+    \"email\": \"test user\",
+    \"password\": \"!@Admin123\",
+    \"gender_type\": 0,
+    \"nationality_type\": 0,
+    \"location_type\": 0,
+    \"contract_type\": 0,
+    \"job_title_type\": 1,
+    \"department_id\": 1,
+    \"manager_id\": 1,
+    \"expiration_date\": \"2023-12-14\",
+    \"is_active\": 1,
+    \"lang\": \"1     *\",
+    \"shifts\": 1,
+    \"zones\": 1,
+    \"wifi_auths\": 1,
+    \"qr_auths\": 1,
+    \"becons\": 1,
+    \"nfc_auths\": 1,
+    \"image\": \"dolore\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/user/edit/13"
+);
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+let body = {
+    "custom_id": 20,
+    "civil_id": "SC20",
+    "username": "test",
+    "full_name": "test user",
+    "email": "test user",
+    "password": "!@Admin123",
+    "gender_type": 0,
+    "nationality_type": 0,
+    "location_type": 0,
+    "contract_type": 0,
+    "job_title_type": 1,
+    "department_id": 1,
+    "manager_id": 1,
+    "expiration_date": "2023-12-14",
+    "is_active": 1,
+    "lang": "1     *",
+    "shifts": 1,
+    "zones": 1,
+    "wifi_auths": 1,
+    "qr_auths": 1,
+    "becons": 1,
+    "nfc_auths": 1,
+    "image": "dolore"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-admin-user-edit--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Records updated successfully.&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Record not found.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-admin-user-edit--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-admin-user-edit--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-admin-user-edit--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-admin-user-edit--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-admin-user-edit--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-admin-user-edit--id-" data-method="POST"
+      data-path="api/v1/admin/user/edit/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-admin-user-edit--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/admin/user/edit/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="13"
+               data-component="url">
+    <br>
+<p>user id. Example: <code>13</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>custom_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="custom_id"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="20"
+               data-component="body">
+    <br>
+<p>. Example: <code>20</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>civil_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="civil_id"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="SC20"
+               data-component="body">
+    <br>
+<p>. Example: <code>SC20</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="username"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="test"
+               data-component="body">
+    <br>
+<p>. Example: <code>test</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>full_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="full_name"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="test user"
+               data-component="body">
+    <br>
+<p>. Example: <code>test user</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="test user"
+               data-component="body">
+    <br>
+<p>. Example: <code>test user</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="!@Admin123"
+               data-component="body">
+    <br>
+<p>. Example: <code>!@Admin123</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>gender_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="gender_type"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="0"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: <code>0</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>nationality_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="nationality_type"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="0"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: <code>0</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="location_type"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="0"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: <code>0</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>contract_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="contract_type"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="0"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: <code>0</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>job_title_type</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="job_title_type"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="1"
+               data-component="body">
+    <br>
+<p>(from lockup list). Example: aust     <em>
+//  </em> @bodyParam role_id int required (from role list). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>department_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="department_id"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="1"
+               data-component="body">
+    <br>
+<p>(from department list). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>manager_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="manager_id"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="1"
+               data-component="body">
+    <br>
+<p>(from manager list). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>expiration_date</code></b>&nbsp;&nbsp;
+<small>date</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="expiration_date"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="2023-12-14"
+               data-component="body">
+    <br>
+<p>. Example: <code>2023-12-14</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="1"
+               data-component="body">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>lang</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="lang"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="1     *"
+               data-component="body">
+    <br>
+<p>(en,ar,de). Example: <code>1     *</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>shifts</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="shifts[0]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="shifts[1]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+    <br>
+<p>shift ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>zones</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="zones[0]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="zones[1]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+    <br>
+<p>zone ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>wifi_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="wifi_auths[0]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="wifi_auths[1]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+    <br>
+<p>wifi_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>qr_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="qr_auths[0]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="qr_auths[1]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+    <br>
+<p>qr_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>becons</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="becons[0]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="becons[1]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+    <br>
+<p>becon ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>nfc_auths</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="nfc_auths[0]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="nfc_auths[1]"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               data-component="body">
+    <br>
+<p>nfc_auth ids array. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>image</code></b>&nbsp;&nbsp;
+<small>base64</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="image"                data-endpoint="POSTapi-v1-admin-user-edit--id-"
+               value="dolore"
+               data-component="body">
+    <br>
+<p>Example: <code>dolore</code></p>
+        </div>
+        </form>
+
+                    <h2 id="user-POSTapi-v1-admin-user-delete--id-">Delete</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-admin-user-delete--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://hrmpro.tatime365.com/api/v1/admin/user/delete/15" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/user/delete/15"
+);
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-admin-user-delete--id-">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Record Deleted.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Record not found.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-admin-user-delete--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-admin-user-delete--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-admin-user-delete--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-admin-user-delete--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-admin-user-delete--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-admin-user-delete--id-" data-method="POST"
+      data-path="api/v1/admin/user/delete/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-admin-user-delete--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/admin/user/delete/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-v1-admin-user-delete--id-"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-admin-user-delete--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-admin-user-delete--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-v1-admin-user-delete--id-"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="POSTapi-v1-admin-user-delete--id-"
+               value="15"
+               data-component="url">
+    <br>
+<p>user id. Example: <code>15</code></p>
+            </div>
+                    </form>
+
+                <h1 id="wifi">WiFi</h1>
+
+    <p>APIs for WiFi</p>
+
+                                <h2 id="wifi-GETapi-v1-admin-wifi-auth-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-wifi-auth-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/wifi-auth/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;is_active=1" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/wifi-auth/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "is_active": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-wifi-auth-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;WiFi List&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-wifi-auth-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-wifi-auth-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-wifi-auth-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-wifi-auth-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-wifi-auth-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-wifi-auth-list" data-method="GET"
+      data-path="api/v1/admin/wifi-auth/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-wifi-auth-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/wifi-auth/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-wifi-auth-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-wifi-auth-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-wifi-auth-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-wifi-auth-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-wifi-auth-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-wifi-auth-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-wifi-auth-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="GETapi-v1-admin-wifi-auth-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+            </div>
+                </form>
+
+                <h1 id="zone">Zone</h1>
+
+    <p>APIs for Zone</p>
+
+                                <h2 id="zone-GETapi-v1-admin-zone-list">List</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-admin-zone-list">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://hrmpro.tatime365.com/api/v1/admin/zone/list?paginate=true&amp;result_per_page=12&amp;search_key=HR+department&amp;is_active=1" \
+    --header "Authorization: Bearer .token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "code: (company code)"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://hrmpro.tatime365.com/api/v1/admin/zone/list"
+);
+
+const params = {
+    "paginate": "true",
+    "result_per_page": "12",
+    "search_key": "HR department",
+    "is_active": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer .token",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "code": "(company code)",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-admin-zone-list">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Zone List&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;validation errors message&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthorised&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Whoops, looks like something went wrong&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-admin-zone-list" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-admin-zone-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-admin-zone-list"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-admin-zone-list" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-admin-zone-list">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-admin-zone-list" data-method="GET"
+      data-path="api/v1/admin/zone/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-admin-zone-list', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/admin/zone/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-admin-zone-list"
+               value="Bearer .token"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer .token</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-admin-zone-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-admin-zone-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="GETapi-v1-admin-zone-list"
+               value="(company code)"
+               data-component="header">
+    <br>
+<p>Example: <code>(company code)</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>paginate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="paginate"                data-endpoint="GETapi-v1-admin-zone-list"
+               value="true"
+               data-component="query">
+    <br>
+<p>(true or false). Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>result_per_page</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="result_per_page"                data-endpoint="GETapi-v1-admin-zone-list"
+               value="12"
+               data-component="query">
+    <br>
+<p>int. Example: <code>12</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search_key</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search_key"                data-endpoint="GETapi-v1-admin-zone-list"
+               value="HR department"
+               data-component="query">
+    <br>
+<p>string. Example: <code>HR department</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_active"                data-endpoint="GETapi-v1-admin-zone-list"
+               value="1"
+               data-component="query">
+    <br>
+<p>(0 or 1). Example: <code>1</code></p>
+            </div>
+                </form>
+
+            
+
+        
+    </div>
+    <div class="dark-box">
+                    <div class="lang-selector">
+                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                            </div>
+            </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+/**
+ * Minified by jsDelivr using clean-css v5.2.4.
+ * Original file: /npm/flatpickr-hijri-calendar@1.0.0/dist/flatpickr-hijri-calendar.css
+ *
+
+ */
+:root {
+    --flatpickr-hijri-date-color: #3cc031;
+    --flatpickr-hijri-date-selected: #f8d4b4
+}
+
+.flatpickr-hijri-month-name {
+    color: var(--flatpickr-hijri-date-color)
+}
+
+.flatpickr-hijri-date-wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: space-evenly;
+    -webkit-justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    line-height: .9em;
+    height: 100%
+}
+
+.flatpickr-hijri-date-hijri {
+    font-size: 12px;
+    color: var(--flatpickr-hijri-date-color)
+}
+
+.flatpickr-hijri-date-not-allowed {
+    color: rgba(57, 57, 57, .3) !important
+}
+
+.flatpickr-hijri-date-selected {
+    color: var(--flatpickr-hijri-date-selected) !important
+}
+
+.flatpickr-hijri-actions {
+    height: 40px;
+    max-height: 0;
+    visibility: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+    background: rgba(0, 0, 0, .06);
+    padding: 0 8px
+}
+
+.flatpickr-hijri-actions.darkTheme {
+    color: #fff;
+    fill: #fff
+}
+
+.flatpickr-hijri-actions.visible {
+    max-height: 40px;
+    visibility: visible
+}
+
+.flatpickr-hijri-switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px
+}
+
+.flatpickr-hijri-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0
+}
+
+label.flatpickr-hijri-switch {
+    margin-left: 8px
+}
+
+.flatpickr-hijri-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s
+}
+
+.flatpickr-hijri-slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
+    -webkit-transition: .4s;
+    transition: .4s
+}
+
+input:checked+.flatpickr-hijri-slider {
+    background-color: var(--flatpickr-hijri-date-color)
+}
+
+input:focus+.flatpickr-hijri-slider {
+    -webkit-box-shadow: 0 0 1px var(--flatpickr-hijri-date-color);
+    box-shadow: 0 0 1px var(--flatpickr-hijri-date-color)
+}
+
+input:checked+.flatpickr-hijri-slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px)
+}
+
+

@@ -1,0 +1,3084 @@
+openapi: 3.0.3
+info:
+  title: 'Time360 Pro Mobile API'
+  description: 'Time360 Pro Mobile API'
+  version: 1.0.0
+servers:
+  -
+    url: 'https://hrmpro.tatime365.com'
+paths:
+  /api/v1/attendance/checkin:
+    post:
+      summary: check-in
+      operationId: checkIn
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Check in successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'Check in successfully'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Attendance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shift_id:
+                  type: integer
+                  description: 'shift id'
+                  example: 4
+                checkin_zone_id:
+                  type: integer.
+                  description: ''
+                  example: quia
+                checkin_time:
+                  type: DateTime
+                  description: '(2022-03-25 00:00:52).'
+                  example: tempore
+                checkin_coordinates:
+                  type: string
+                  description: '(30.17784975174326, 76.22428909946592).'
+                  example: autem
+                checkin_auth_device_type:
+                  type: integer
+                  description: '(1->wifi, 2->Qr, 3->Becon, 4->NFC).'
+                  example: 19
+                shift_index:
+                  type: integer
+                  description: 'index of shift_rule object.'
+                  example: 7
+                checkin_media:
+                  type: base64
+                  description: ''
+                  example: quis
+                checkin_auth_device_value:
+                  type: string.
+                  description: ''
+                  example: laborum
+                terminal_user_uuid:
+                  type: string
+                  description: 'only for terminal.'
+                  example: 03616a0b-1ea8-3919-8673-306aef3d3081
+              required:
+                - shift_id
+                - checkin_time
+                - checkin_coordinates
+                - shift_index
+      security: []
+  /api/v1/attendance/checkout:
+    post:
+      summary: check-out
+      operationId: checkOut
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Check out successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'Check out successfully'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Check in record not found'
+                properties:
+                  message:
+                    type: string
+                    example: 'Check in record not found'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Attendance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checkout_zone_id:
+                  type: integer
+                  description: required.
+                  example: 1
+                checkout_time:
+                  type: DateTime
+                  description: '(2022-03-25 00:00:52).'
+                  example: non
+                checkout_coordinates:
+                  type: string
+                  description: '(30.17784975174326, 76.22428909946592).'
+                  example: quasi
+                checkout_auth_device_type:
+                  type: integer
+                  description: '(1->wifi, 2->Qr, 3->Becon, 4->NFC).'
+                  example: 16
+                shift_index:
+                  type: integer
+                  description: 'index of shift_rule object.'
+                  example: 2
+                checkout_media:
+                  type: base64
+                  description: ''
+                  example: molestias
+                checkout_auth_device_value:
+                  type: string.
+                  description: ''
+                  example: odio
+                terminal_user_uuid:
+                  type: string
+                  description: 'only for terminal.'
+                  example: 737f634a-c3f8-335f-9b6e-3d09de80aecf
+              required:
+                - checkout_time
+                - checkout_coordinates
+                - shift_index
+      security: []
+  /api/v1/attendance/all-record:
+    get:
+      summary: 'Get All Attendance'
+      operationId: getAllAttendance
+      description: ''
+      parameters:
+        -
+          in: query
+          name: terminal_user_uuid
+          description: 'only for terminal.'
+          example: 0d00d049-5ce6-393e-b300-c876f499b5fd
+          required: false
+          schema:
+            type: string
+            description: 'only for terminal.'
+            example: 0d00d049-5ce6-393e-b300-c876f499b5fd
+        -
+          in: query
+          name: date
+          description: 'date format : 2023-08-01'
+          example: temporibus
+          required: false
+          schema:
+            type: string
+            description: 'date format : 2023-08-01'
+            example: temporibus
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'All attendance records'
+                properties:
+                  message:
+                    type: string
+                    example: 'All attendance records'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Attendance
+      security: []
+  /api/v1/attendance/single-record:
+    get:
+      summary: 'Get Single Attendance Details'
+      operationId: getSingleAttendanceDetails
+      description: ''
+      parameters:
+        -
+          in: query
+          name: uuid
+          description: 'attendance uuid'
+          example: 07693ccb-2ab7-3f81-bf72-a2c02b2cfc6d
+          required: true
+          schema:
+            type: integer
+            description: 'attendance uuid'
+            example: 07693ccb-2ab7-3f81-bf72-a2c02b2cfc6d
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Single attendance details'
+                properties:
+                  message:
+                    type: string
+                    example: 'Single attendance details'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Attendance
+      security: []
+  /api/v1/attendance/today-attendance-status:
+    get:
+      summary: 'Get Today Attendance Status'
+      operationId: getTodayAttendanceStatus
+      description: ''
+      parameters:
+        -
+          in: query
+          name: terminal_user_uuid
+          description: 'only for terminal.'
+          example: 47d6b5e1-872b-362f-81ae-2fd06cc98503
+          required: false
+          schema:
+            type: string
+            description: 'only for terminal.'
+            example: 47d6b5e1-872b-362f-81ae-2fd06cc98503
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Attendance status'
+                properties:
+                  message:
+                    type: string
+                    example: 'Attendance status'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Attendance
+      security: []
+  /api/v1/attendance/last-attendance-record:
+    get:
+      summary: 'last Attendance Record'
+      operationId: lastAttendanceRecord
+      description: ''
+      parameters:
+        -
+          in: query
+          name: terminal_user_uuid
+          description: 'only for terminal.'
+          example: 0923ef9d-3abd-367e-903b-c9956aad9f33
+          required: false
+          schema:
+            type: string
+            description: 'only for terminal.'
+            example: 0923ef9d-3abd-367e-903b-c9956aad9f33
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'All attendance records'
+                properties:
+                  message:
+                    type: string
+                    example: 'All attendance records'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Attendance
+      security: []
+  /api/v1/company-setting:
+    get:
+      summary: Setting
+      operationId: setting
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'already checked in'
+                  data: ''
+                properties:
+                  message:
+                    type: string
+                    example: 'already checked in'
+                  data:
+                    type: string
+                    example: ''
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: check_in_successfully
+                  data: ''
+                properties:
+                  message:
+                    type: string
+                    example: check_in_successfully
+                  data:
+                    type: string
+                    example: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Company
+      security: []
+  /api/v1/login:
+    post:
+      summary: 'User Login'
+      operationId: userLogin
+      description: "<aside class=\"notice\">Shift Type ( 1->fixed_shift, 2->split_shift,3->overnight,4->open shift,5->business shift )</aside>\n<aside class=\"notice\">Priority ( 1->Low, 2->High )</aside>"
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'authenticate user'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'authenticate user'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'username or password not match'
+                properties:
+                  message:
+                    type: string
+                    example: 'username or password not match'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: ''
+                  example: quo
+                password:
+                  type: string
+                  description: ''
+                  example: 'Et2Lu~$+N[Hm'
+                device_token:
+                  type: string
+                  description: ''
+                  example: vel
+                fcm_token:
+                  type: string
+                  description: 'optional for notification'
+                  example: consequatur
+              required:
+                - username
+                - password
+                - device_token
+      security: []
+  /api/v1/verify-authenticator2fa:
+    post:
+      summary: 'Verify Authenticator 2FA'
+      operationId: verifyAuthenticator2FA
+      description: "<aside class=\"notice\">Shift Type ( 1->fixed_shift, 2->split_shift,3->overnight,4->open shift,5->business shift )</aside>\n<aside class=\"notice\">Priority ( 1->Low, 2->High )</aside>"
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'user login successfully'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'user login successfully'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Invalid Code'
+                properties:
+                  message:
+                    type: string
+                    example: 'Invalid Code'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token_key:
+                  type: string
+                  description: ''
+                  example: deserunt
+                auth_code:
+                  type: string
+                  description: '(Provided by google authenticator app)'
+                  example: minima
+              required:
+                - token_key
+                - auth_code
+      security: []
+  /api/v1/fingerprint-login:
+    post:
+      summary: 'Fingerprint Login'
+      operationId: fingerprintLogin
+      description: "<aside class=\"notice\">Shift Type ( 1->fixed_shift, 2->split_shift,3->overnight,4->open shift,5->business shift )</aside>\n<aside class=\"notice\">Priority ( 1->Low, 2->High )</aside>"
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'user login successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'user login successfully'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation errors'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation errors'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Login failed'
+                properties:
+                  message:
+                    type: string
+                    example: 'Login failed'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_token:
+                  type: string
+                  description: ''
+                  example: exercitationem
+                fingerprint_token:
+                  type: string
+                  description: ''
+                  example: quae
+                fcm_token:
+                  type: string
+                  description: 'optional for notification'
+                  example: voluptates
+              required:
+                - device_token
+                - fingerprint_token
+      security: []
+  /api/v1/logout:
+    post:
+      summary: 'User Logout'
+      operationId: userLogout
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Logged out'
+                properties:
+                  message:
+                    type: string
+                    example: 'Logged out'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Login
+      security: []
+  /api/v1/password-reset:
+    post:
+      summary: 'User Password Reset'
+      operationId: userPasswordReset
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Password reset successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'Password reset successfully'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'old password not match'
+                properties:
+                  message:
+                    type: string
+                    example: 'old password not match'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                  description: ''
+                  example: rem
+                new_password:
+                  type: string
+                  description: ''
+                  example: placeat
+              required:
+                - old_password
+                - new_password
+      security: []
+  /api/v1/refresh-user:
+    get:
+      summary: 'Refresh User'
+      operationId: refreshUser
+      description: "<aside class=\"notice\">Shift Type ( 1->fixed_shift, 2->split_shift,3->overnight,4->open shift,5->business shift )</aside>\n<aside class=\"notice\">Priority ( 1->Low, 2->High )</aside>"
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Refresh user information'
+                properties:
+                  message:
+                    type: string
+                    example: 'Refresh user information'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'refresh user failed'
+                properties:
+                  message:
+                    type: string
+                    example: 'refresh user failed'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Login
+      security: []
+  /api/v1/edit-user:
+    post:
+      summary: 'Edit User'
+      operationId: editUser
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        202:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: 1
+                  message: 'Profile updated successfully.'
+                properties:
+                  status:
+                    type: integer
+                    example: 1
+                  message:
+                    type: string
+                    example: 'Profile updated successfully.'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: 0
+                  message: 'validation failure message'
+                properties:
+                  status:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: 'validation failure message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: 0
+                  message: Unauthorised
+                properties:
+                  status:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: 0
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  status:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Login
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lang:
+                  type: string
+                  description: 'lang (en, ar, de)'
+                  example: labore
+                user_calendar_type:
+                  type: numeric
+                  description: "types (\t1->Gregorian, 2->Hijri )"
+                  example: voluptatem
+                full_name:
+                  type: string
+                  description: ''
+                  example: hic
+                profile_image:
+                  type: base64.
+                  description: ''
+                  example: sit
+      security: []
+  /api/v1/generate-fingerprint-token:
+    get:
+      summary: 'Fingerprint Token'
+      operationId: fingerprintToken
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'fingerprint token'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'fingerprint token'
+                  data:
+                    type: array
+                    example: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Login
+      security: []
+  /api/v1/get-leave-types:
+    get:
+      summary: 'Get Leave Type'
+      operationId: getLeaveType
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Leave type list'
+                properties:
+                  message:
+                    type: string
+                    example: 'Leave type list'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      security: []
+  /api/v1/get-reviewers:
+    get:
+      summary: 'Get Reviewers'
+      operationId: getReviewers
+      description: ''
+      parameters:
+        -
+          in: query
+          name: search_query.
+          description: ''
+          example: labore
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: labore
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Reviewers list'
+                properties:
+                  message:
+                    type: string
+                    example: 'Reviewers list'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      security: []
+  /api/v1/create-leave-request:
+    post:
+      summary: 'Create Leavel Request'
+      operationId: createLeavelRequest
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Leave request created'
+                properties:
+                  message:
+                    type: string
+                    example: 'Leave request created'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation failure message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation failure message'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reviewer:
+                  type: integer
+                  description: 'reviewer id'
+                  example: 6
+                subject:
+                  type: string
+                  description: ''
+                  example: aspernatur
+                reason:
+                  type: string
+                  description: ''
+                  example: rerum
+                start_date:
+                  type: date
+                  description: '(dateformat: 2022-10-30)'
+                  example: culpa
+                end_date:
+                  type: date
+                  description: '(dateformat: 2022-10-30)'
+                  example: qui
+                leave_type_id:
+                  type: integer
+                  description: 'leave type id'
+                  example: 3
+                attached_file:
+                  type: base64.
+                  description: ''
+                  example: aliquam
+              required:
+                - reviewer
+                - subject
+                - reason
+                - start_date
+                - end_date
+                - leave_type_id
+      security: []
+  /api/v1/edit-leave-request:
+    post:
+      summary: 'Edit Leavel Request'
+      operationId: editLeavelRequest
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        202:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Leave request updated'
+                properties:
+                  message:
+                    type: string
+                    example: 'Leave request updated'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation failure message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation failure message'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  description: 'leave uuid.'
+                  example: 758941ae-3219-319b-9283-454de41980cb
+                leave_type_id:
+                  type: integer
+                  description: 'leave type id'
+                  example: 2
+                subject:
+                  type: string
+                  description: ''
+                  example: libero
+                reason:
+                  type: string
+                  description: ''
+                  example: nam
+                start_date:
+                  type: date
+                  description: '(dateformat: 2022-10-30)'
+                  example: nobis
+                end_date:
+                  type: date
+                  description: '(dateformat: 2022-10-30)'
+                  example: sequi
+                attached_file:
+                  type: base64.
+                  description: ''
+                  example: voluptatum
+              required:
+                - uuid
+                - leave_type_id
+                - subject
+                - reason
+                - start_date
+                - end_date
+      security: []
+  /api/v1/delete-leave:
+    post:
+      summary: 'Delete Leavel'
+      operationId: deleteLeavel
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        202:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Leave deleted'
+                properties:
+                  message:
+                    type: string
+                    example: 'Leave deleted'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation failure message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation failure message'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  description: 'leave uuid.'
+                  example: de5bff40-ad2e-396c-a000-41f250252006
+              required:
+                - uuid
+      security: []
+  /api/v1/get-all-leaves:
+    get:
+      summary: 'Get All Leaves'
+      operationId: getAllLeaves
+      description: '<aside class="notice">status 0 -> requested/pending, 1->approved, 2->rejected</aside>'
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'All Leave List'
+                properties:
+                  message:
+                    type: string
+                    example: 'All Leave List'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      security: []
+  /api/v1/get-single-leave:
+    get:
+      summary: 'Get Single Leave'
+      operationId: getSingleLeave
+      description: '<aside class="notice">status 0 -> requested/pending, 1->approved, 2->rejected</aside>'
+      parameters:
+        -
+          in: query
+          name: uuid
+          description: 'leave uuid'
+          example: 79550055-7a97-3bbb-81e7-d400311207ae
+          required: true
+          schema:
+            type: string
+            description: 'leave uuid'
+            example: 79550055-7a97-3bbb-81e7-d400311207ae
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'single Leave data'
+                properties:
+                  message:
+                    type: string
+                    example: 'single Leave data'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: 0
+                  message: 'validation failure message'
+                properties:
+                  status:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: 'validation failure message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      security: []
+  /api/v1/get-remaning-leaves:
+    get:
+      summary: 'Get Remaning Leave'
+      operationId: getRemaningLeave
+      description: ''
+      parameters:
+        -
+          in: query
+          name: leave_type_id
+          description: 'leave type id.'
+          example: 4
+          required: true
+          schema:
+            type: integer
+            description: 'leave type id.'
+            example: 4
+        -
+          in: query
+          name: start_date
+          description: 'date (dateformat: 2022-10-30).'
+          example: nisi
+          required: true
+          schema:
+            type: string
+            description: 'date (dateformat: 2022-10-30).'
+            example: nisi
+        -
+          in: query
+          name: end_date
+          description: 'date (dateformat: 2022-10-30).'
+          example: ad
+          required: true
+          schema:
+            type: string
+            description: 'date (dateformat: 2022-10-30).'
+            example: ad
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Remaning Leaves'
+                properties:
+                  message:
+                    type: string
+                    example: 'Remaning Leaves'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                leave_type_id:
+                  type: number
+                  description: ''
+                  example: 4195.7311294
+                start_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2024-08-18</code>.'
+                  example: '2092-05-08'
+                end_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>start_date</code>.'
+                  example: '2118-10-29'
+              required:
+                - leave_type_id
+                - start_date
+                - end_date
+      security: []
+  /api/v1/return-from-leave:
+    post:
+      summary: 'Return from Leave'
+      operationId: returnFromLeave
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Leave return Successful'
+                properties:
+                  message:
+                    type: string
+                    example: 'Leave return Successful'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: 0
+                  message: 'validation failure message'
+                properties:
+                  status:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: 'validation failure message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Leave
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  description: 'leave uuid'
+                  example: 7366b114-63d5-3f19-a29e-2c07c6cd1453
+              required:
+                - uuid
+      security: []
+  /api/v1/all-notification:
+    get:
+      summary: 'All FCM Notification'
+      operationId: allFCMNotification
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: notifications
+                  data: ''
+                properties:
+                  message:
+                    type: string
+                    example: notifications
+                  data:
+                    type: string
+                    example: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Notification
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filterRequestDate:
+                  type: DateTime
+                  description: 'optional (2022-03-25 00:00:52).'
+                  example: sit
+      security: []
+  /api/v1/get-user-shifts:
+    get:
+      summary: 'Get User Shifts'
+      operationId: getUserShifts
+      description: "<aside class=\"notice\">Shift Type ( 1->fixed_shift, 2->split_shift,3->overnight,4->open shift,5->business shift )</aside>\n<aside class=\"notice\">Priority ( 1->Low, 2->High )</aside>"
+      parameters:
+        -
+          in: query
+          name: terminal_user_uuid
+          description: 'only for terminal.'
+          example: d2a05ddc-b081-3a1e-94ef-8f61cd70e8c3
+          required: false
+          schema:
+            type: string
+            description: 'only for terminal.'
+            example: d2a05ddc-b081-3a1e-94ef-8f61cd70e8c3
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Shift details'
+                properties:
+                  message:
+                    type: string
+                    example: 'Shift details'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Shift
+      security: []
+  /api/v1/get-shift-details:
+    get:
+      summary: 'Get Shift Details'
+      operationId: getShiftDetails
+      description: "<aside class=\"notice\">Shift Type ( 1->fixed_shift, 2->split_shift,3->overnight,4->open shift,5->business shift )</aside>\n<aside class=\"notice\">Priority ( 1->Low, 2->High )</aside>"
+      parameters:
+        -
+          in: query
+          name: uuid
+          description: 'shift uuid'
+          example: aa506030-6bd3-3afd-8598-7026c582b758
+          required: true
+          schema:
+            type: integer
+            description: 'shift uuid'
+            example: aa506030-6bd3-3afd-8598-7026c582b758
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Shift details'
+                properties:
+                  message:
+                    type: string
+                    example: 'Shift details'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Shift
+      security: []
+  /api/v1/get-shift-start-end-time:
+    get:
+      summary: 'Shift Start-End Time'
+      operationId: shiftStartEndTime
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Shift start end time'
+                properties:
+                  message:
+                    type: string
+                    example: 'Shift start end time'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Shift
+      security: []
+  /api/v1/get-permission-types:
+    get:
+      summary: 'Permission Types'
+      operationId: permissionTypes
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Permission Type list'
+                properties:
+                  message:
+                    type: string
+                    example: 'Permission Type list'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Short Leave'
+      security: []
+  /api/v1/get-short-leave-types:
+    get:
+      summary: 'Get short Leave Type'
+      operationId: getShortLeaveType
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Short Leave type list'
+                properties:
+                  message:
+                    type: string
+                    example: 'Short Leave type list'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Short Leave'
+      security: []
+  /api/v1/create-short-leave-request:
+    post:
+      summary: 'Create Short Leavel'
+      operationId: createShortLeavel
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Short leave request created'
+                properties:
+                  message:
+                    type: string
+                    example: 'Short leave request created'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation failure message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation failure message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Short Leave'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reviewer:
+                  type: integer
+                  description: 'reviewer id (use same api as leave)'
+                  example: 4
+                subject:
+                  type: string
+                  description: ''
+                  example: alias
+                reason:
+                  type: string
+                  description: ''
+                  example: qui
+                short_leave_type:
+                  type: integer
+                  description: 'short leave type id'
+                  example: 14
+                permission_type:
+                  type: integer
+                  description: 'permission type (from Permission Types List)'
+                  example: 11
+                short_leave_date:
+                  type: date
+                  description: '(format: YYYY-MM-DD).'
+                  example: '2023-06-12'
+                start_time:
+                  type: time
+                  description: '(format: HH:mm).'
+                  example: '13:15'
+                end_time:
+                  type: time
+                  description: '(format: HH:mm).'
+                  example: '13:15'
+                request_time:
+                  type: integer
+                  description: '(in minutes).'
+                  example: 60
+              required:
+                - reviewer
+                - short_leave_type
+                - permission_type
+                - short_leave_date
+      security: []
+  /api/v1/get-all-short-leaves:
+    get:
+      summary: 'Get All Short Leaves'
+      operationId: getAllShortLeaves
+      description: '<aside class="notice">status 0 -> requested/pending, 1->approved, 2->rejected</aside>'
+      parameters:
+        -
+          in: query
+          name: date
+          description: 'date (format: YYYY-MM-DD).'
+          example: '2023-06-12'
+          required: false
+          schema:
+            type: string
+            description: 'date (format: YYYY-MM-DD).'
+            example: '2023-06-12'
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'All Short Leave List'
+                properties:
+                  message:
+                    type: string
+                    example: 'All Short Leave List'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Short Leave'
+      security: []
+  /api/v1/get-single-short-leave:
+    get:
+      summary: 'Get Single Short Leave'
+      operationId: getSingleShortLeave
+      description: '<aside class="notice">status 0 -> requested/pending, 1->approved, 2->rejected</aside>'
+      parameters:
+        -
+          in: query
+          name: uuid
+          description: 'short leave uuid.'
+          example: d114eac2-5368-4138-8dd2-94143969063e
+          required: true
+          schema:
+            type: string
+            description: 'short leave uuid.'
+            example: d114eac2-5368-4138-8dd2-94143969063e
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'single short Leave data'
+                properties:
+                  message:
+                    type: string
+                    example: 'single short Leave data'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'validation failure message'
+                properties:
+                  message:
+                    type: string
+                    example: 'validation failure message'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Short Leave'
+      security: []
+  /api/v1/start-short-leave:
+    post:
+      summary: 'Start Short Leave'
+      operationId: startShortLeave
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'short leave started'
+                properties:
+                  message:
+                    type: string
+                    example: 'short leave started'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'short leave already started'
+                properties:
+                  message:
+                    type: string
+                    example: 'short leave already started'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Short Leave'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  description: 'short leave uuid.'
+                  example: d114eac2-5368-4138-8dd2-94143969063e
+                start_time:
+                  type: date_time
+                  description: '(format: YYYY-MM-DD HH:MM).'
+                  example: '2023-12-24 13:15'
+              required:
+                - uuid
+                - start_time
+      security: []
+  /api/v1/end-short-leave:
+    post:
+      summary: 'End Short Leave'
+      operationId: endShortLeave
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'short leave ended'
+                properties:
+                  message:
+                    type: string
+                    example: 'short leave ended'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'short leave already ended'
+                properties:
+                  message:
+                    type: string
+                    example: 'short leave already ended'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Short Leave'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  description: 'short leave uuid.'
+                  example: d114eac2-5368-4138-8dd2-94143969063e
+                end_time:
+                  type: date_time
+                  description: '(format: YYYY-MM-DD HH:MM).'
+                  example: '2023-12-24 14:15'
+              required:
+                - uuid
+                - end_time
+      security: []
+  /api/v1/get-remaining-balance:
+    get:
+      summary: 'Get Remaining Balance'
+      operationId: getRemainingBalance
+      description: ''
+      parameters:
+        -
+          in: query
+          name: short_leave_type
+          description: 'short leave type id'
+          example: 8
+          required: true
+          schema:
+            type: integer
+            description: 'short leave type id'
+            example: 8
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Remaining Balance'
+                properties:
+                  message:
+                    type: string
+                    example: 'Remaining Balance'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - 'Short Leave'
+      security: []
+  /api/v1/search-terminal-user:
+    get:
+      summary: 'Search Terminal User'
+      operationId: searchTerminalUser
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Code
+          description: ''
+          example: '(company code)'
+          schema:
+            type: string
+        -
+          in: header
+          name: lang
+          description: ''
+          example: '(en, ar, de)'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User Details'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'User Details'
+                  data:
+                    type: array
+                    example: []
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Record not found.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorised
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorised
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Whoops, looks like something went wrong'
+                properties:
+                  message:
+                    type: string
+                    example: 'Whoops, looks like something went wrong'
+      tags:
+        - Terminal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search_key:
+                  type: string
+                  description: 'search by (name, custom_id, civil_id, full_name)'
+                  example: minus
+              required:
+                - search_key
+      security: []
+tags:
+  -
+    name: Attendance
+    description: "\nAPIs for attendance management"
+  -
+    name: Company
+    description: "\nAPIs for managing company"
+  -
+    name: Login
+    description: "\nAPIs for managing system login"
+  -
+    name: Leave
+    description: "\nAPIs for leave management"
+  -
+    name: Notification
+    description: "\nAPIs for FCM Notification"
+  -
+    name: Shift
+    description: "\nAPIs for Shift management"
+  -
+    name: 'Short Leave'
+    description: "\nAPIs for short leave management"
+  -
+    name: Terminal
+    description: "\nAPIs for Terminal management"
+components:
+  securitySchemes:
+    default:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: '<aside>You can retrieve your token by <b> login or register to the system</b>.</aside>'
+security:
+  -
+    default: []
